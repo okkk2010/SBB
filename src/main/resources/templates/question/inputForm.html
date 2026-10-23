@@ -3,6 +3,14 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
 
+<th:block layout:fragment="css">
+    <style>
+        .fieldError {
+            color: red;
+        }
+    </style>
+</th:block>
+
 
 <div layout:fragment="content" class="container my-3">
     <div class="card shadow-sm">
@@ -11,7 +19,7 @@
         </div>
 
         <div class="card-body">
-            <form th:action="@{/question/create}" method="post">
+            <form th:action="@{/question/create}" th:object="${questionDto}" method="post">
 
                 <!-- 제목 -->
                 <div class="mb-3">
@@ -23,8 +31,13 @@
                             class="form-control"
                             id="subject"
                             name="subject"
+                            th:field="*{subject}"
                             placeholder="질문 제목을 입력하세요."
-                            required>
+                            required
+                    >
+                    <p th:if="${#fields.hasErrors('subject')}"
+                       class="fieldError"
+                       th:errors="*{subject}">error</p>
                 </div>
 
                 <!-- 내용 -->
@@ -37,8 +50,13 @@
                             id="content"
                             name="content"
                             rows="8"
+                            th:field="*{content}"
                             placeholder="질문 내용을 입력하세요."
-                            required></textarea>
+                            required></textarea
+                    >
+                    <p th:if="${#fields.hasErrors('content')}"
+                       class="fieldError"
+                       th:errors="*{content}"></p>
                 </div>
 
                 <!-- 등록 버튼 -->

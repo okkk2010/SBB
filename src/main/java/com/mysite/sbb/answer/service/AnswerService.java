@@ -1,5 +1,6 @@
 package com.mysite.sbb.answer.service;
 
+import com.mysite.sbb.answer.dto.AnswerDto;
 import com.mysite.sbb.answer.entity.Answer;
 import com.mysite.sbb.answer.repository.AnswerRepository;
 import com.mysite.sbb.question.entity.Question;
@@ -16,9 +17,9 @@ import java.time.LocalDateTime;
 public class AnswerService {
     private final AnswerRepository  answerRepository;
 
-    public void createAnswer(Question question, String content) {
+    public void createAnswer(Question question, AnswerDto answerDto) {
         Answer answer = Answer.builder()
-                .content(content)
+                .content(answerDto.getContent())
                 .question(question)
                 .created(LocalDateTime.now())
                 .build();
